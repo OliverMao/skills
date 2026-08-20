@@ -1,0 +1,47 @@
+# ── Python ─────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# ⚠️ 运行时产生、绝不应提交：视觉配置/密钥、图片、缓存。
+# 注意：其父目录 .pi/ 下的内容均为运行时数据。
+
+# ── 运行时缓存 / 暂存（describe.py / setup.py 写入）────
+# 图片暂存区（主模型放置待识别图片）
+.pi/tmp/image/
+# 描述先验缓存（describe.py 自动生成）
+.pi/tmp/vision_cache/
+.pi/
+
+# 兼容旧版/手写的相对路径缓存落点
+vision_cache/
+scripts/.pi/
+
+# ── 本地视觉模型配置（含 API key，勿提交）──────────────
+settings.json
+*.settings.json
+
+# ── 测试 / 调试残留 ────────────────────────────────────
+_t/
+_test/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.bmp
+*_test*.txt
+mock*.py
+req.json
+
+# ── 编辑器 / OS ────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
