@@ -1,0 +1,8 @@
+# 单个 skill 测试用例的运行时产物（pi 会话、描述缓存等）不提交
+.pi/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.bmp

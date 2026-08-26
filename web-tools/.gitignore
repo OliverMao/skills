@@ -1,0 +1,22 @@
+# ---- 本 skill（web-tools）忽略项 ----
+
+# 大体积二进制：Obscura 无头浏览器 (~200MB)，不入库
+#（缺失时 install.sh 会自动跑 download.sh 从官方 release 拉取）
+scripts/bin/
+
+# 运行时产物
+logs/
+scripts/logs/
+screenshots/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# pi 项目本地配置 / 临时会话
+.pi/
+.pi/tmp/
+
+# 通用临时文件
+*.tmp
+nohup.out
