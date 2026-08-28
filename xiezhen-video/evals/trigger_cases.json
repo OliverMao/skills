@@ -1,0 +1,27 @@
+{
+  "recommended_threshold": 0.5,
+  "should_trigger": [
+    {"text": "帮我写一段完整的夏日果园视频写真 Prompt", "family": "detailed_video"},
+    {"text": "给我一套八段视频写真系列母版", "family": "series_master_video"},
+    {"text": "把这组照片/短视频拆成可复用的视频写真关键词", "family": "reverse_video"},
+    {"text": "给这套 Y2K 写真写五条同系列视频变体关键词链", "family": "variant_video"},
+    {"text": "写一份网页端写真短视频抽卡关键词", "family": "draw_card_video"},
+    {"text": "我喜欢这套写真，换个人像去同一家店一样重新拍五段视频", "family": "video_reshoot"},
+    {"text": "照这组参考图的完整摄影企划，为原创女性重新设计新分镜视频并直接生成", "family": "video_reshoot"},
+    {"text": "用 $kagnet-xiezhen-video 生成一段视频写真", "family": "explicit_video"}
+  ],
+  "should_not_trigger": [
+    {"text": "把公众号文章排版成微信 HTML", "family": "wechat"},
+    {"text": "生成一张静态产品信息图", "family": "infographic"},
+    {"text": "把这段视频剪成十五秒预告片", "family": "video_edit"},
+    {"text": "审计并修改这个 SKILL.md", "family": "skill_engineering"},
+    {"text": "总结这份 PDF", "family": "document"}
+  ],
+  "near_neighbor": [
+    {"text": "只拆解这段视频的质感与运镜，不要生成", "family": "analysis_only"},
+    {"text": "把原视频里的人直接换脸，背景像素完全不动", "family": "video_edit"},
+    {"text": "查一下这位摄影师最近的作品", "family": "web_research"},
+    {"text": "给这段视频做后期调色和降噪，不要重新生成", "family": "video_post"},
+    {"text": "把已经生成的视频同步进 Eagle", "family": "archive_only"}
+  ]
+}

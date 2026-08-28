@@ -1,0 +1,46 @@
+{
+  "fallback_positive_concepts": ["portrait_video_prompt"],
+  "positive_concepts": {
+    "portrait_video_prompt": {
+      "weight": 1.0,
+      "phrases": [
+        "kagnet-xiezhen-video",
+        "视频写真提示词",
+        "视频写真 Prompt",
+        "视频系列母版",
+        "视频变体关键词链",
+        "同系列视频变体",
+        "写真短视频关键词",
+        "视频抽卡关键词",
+        "拆解视频写真",
+        "视频写真关键词",
+        "同一家店拍视频",
+        "换个人像去同一家店",
+        "照这套写真拍视频",
+        "换个人拍一套视频",
+        "视频企划复拍",
+        "完整摄影企划视频",
+        "重新设计新分镜视频",
+        "分镜脚本",
+        "事件弧",
+        "镜头运动"
+      ]
+    }
+  },
+  "negative_concepts": {
+    "other_task": {
+      "weight": 1.0,
+      "exclusive": true,
+      "phrases": [
+        "公众号排版",
+        "产品信息图",
+        "视频剪辑",
+        "审计 SKILL.md",
+        "总结 PDF",
+        "只做后期调色",
+        "同步进 Eagle",
+        "换脸"
+      ]
+    }
+  }
+}

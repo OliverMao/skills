@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "purpose": "验证视频企划复拍模式会还原完整视频拍摄企划、按布光子方案分配原始参考、重新造人与设计新分镜视频，并保证运动光源不随镜头旋转、跨段一致性不被破坏，同时保持普通视频 Prompt 模式不回归。",
+  "cases": [
+    {
+      "id": "video-reshoot-five-segments",
+      "type": "positive",
+      "input": "我很喜欢这组园林旗袍写真，换一位原创人物，像去同一家店拍这套企划视频一样重新设计新分镜，直接生成五段短视频。",
+      "mustCover": [
+        "视频企划复拍",
+        "共同写真套餐与运动子语法",
+        "布光子方案",
+        "根据写真企划自动选择原创女性类型",
+        "一段主参考和严格可选的最多两段辅助参考",
+        "每段一条事件弧与一个镜头运动",
+        "生成五段",
+        "完整视频 Prompt 与追溯记录直接在对话中交付",
+        "Eagle 仅作为可选归档"
+      ],
+      "mustAvoid": [
+        "三段静止摆拍无事件",
+        "校准样张",
+        "自动多生成候选",
+        "检查组内是否同一张脸"
+      ]
+    },
+    {
+      "id": "auxiliary-reference-is-not-a-quota",
+      "type": "decision",
+      "input": "主参考是中性树荫柔光，另一段虽然同为绿色背景，却有暖色发丝轮廓光和大圆奶油散景。两段都要带吗？",
+      "mustCover": [
+        "只用主参考",
+        "辅助参考不是配额",
+        "暖色边缘光与散景属于不同光场证据",
+        "禁止模型自行升级成现代商业人像"
+      ],
+      "mustAvoid": [
+        "因为都明亮或都有绿色背景就归为同一子方案",
+        "强行补满两段辅助参考"
+      ]
+    },
+    {
+      "id": "video-reshoot-with-identity-image",
+      "type": "positive",
+      "input": "第一张是我的人物形象图，后面是视频写真参考。保持我的主要五官辨识度，按参考组的企划拍三段新视频。",
+      "mustCover": [
+        "人物身份素材只回答她是谁",
+        "主要五官辨识度",
+        "写真参考不承担人物身份",
+        "三段新分镜视频，每段事件弧不同"
+      ],
+      "mustAvoid": [
+        "让写真参考人物覆盖身份素材",
+        "逐段复刻全部参考运镜与构图"
+      ]
+    },
+    {
+      "id": "neutral-identity-action-arc-release",
+      "type": "adversarial-identity-expression",
+      "input": "人物身份素材是正面中性表情，但参考视频里的状态很灵动。保持同一个人时，怎样避免每段都像身份照一样呆？",
+      "mustCover": [
+        "身份与表情分开控制",
+        "只保留可见且稳定的少量身份锚点",
+        "不要继承身份素材的中性表情、眼神方向和嘴角状态",
+        "现场触发到身体和面部响应的事件弧"
+      ],
+      "mustAvoid": [
+        "把眼神气质和中性嘴角当作每段身份锚点",
+        "只写自然、灵动或微笑",
+        "为了表情变化放弃人物身份素材",
+        "整段无事件静止摆拍"
+      ]
+    },
+    {
+      "id": "reference-background-information-hierarchy",
+      "type": "adversarial-composition",
+      "input": "参考视频明明有很多植物却很通透：主要是几片大叶子和大片暗部。新段为什么不能把后面每片叶子都画清楚？",
+      "mustCover": [
+        "背景信息层级",
+        "主导大形",
+        "主体清晰区",
+        "连续低细节区或留白",
+        "背景分区降低锐度和局部微反差",
+        "背景清晰度变化要有焦点或运动的理由"
+      ],
+      "mustAvoid": [
+        "因为场景丰富就要求每层背景清楚",
+        "同时保留每片叶脉和每根枝条",
+        "把背景更暗误当成已经通透"
+      ]
+    },
+    {
+      "id": "no-event-stiff-video-quality-gate",
+      "type": "execution",
+      "input": "生成段脸很像、人体也没错，但画面从头到尾没有事件、表情像中性身份照、背景枝叶又碎又抢人，可以算 adopted 吗？",
+      "mustCover": [
+        "事件弧门禁不通过",
+        "镜头运动一致性门禁不通过",
+        "画面信息层级门禁不通过",
+        "保留为 test 或 failed",
+        "不能只凭身份、人体和光照通过"
+      ],
+      "mustAvoid": [
+        "标记 adopted",
+        "只检查脸、手和曝光",
+        "自动补段或重试"
+      ]
+    },
+    {
+      "id": "video-redo-from-original-inputs",
+      "type": "adversarial-regeneration",
+      "input": "上一轮生成的两段太干净、背景又碎，我要重做这两段。请不要在旧视频上修，仍然用原来的人物素材和对应参考重新生成。",
+      "mustCover": [
+        "回到原始人物素材与本段原始参考",
+        "上一段生成视频只用于诊断问题",
+        "重新编译完整新视频 Prompt",
+        "generated_video_inputs: none",
+        "新输出直接对照原始参考"
+      ],
+      "mustAvoid": [
+        "把上一段生成视频作为视觉输入",
+        "基于上一段继续调整",
+        "只在旧 Prompt 末尾追加补丁式指令"
+      ]
+    },
+    {
+      "id": "relative-improvement-is-not-original-fidelity",
+      "type": "adversarial-validation",
+      "input": "新一轮确实比上一轮更顺滑、更粗粝了，能不能直接算这套参考风格已经做对？",
+      "mustCover": [
+        "相对改善不等于原作绝对保真",
+        "直接对照原始参考",
+        "写真套餐、布光曝光、色彩、成像质感和画面层级",
+        "未通过时保持 test",
+        "用户验收单独记录"
+      ],
+      "mustAvoid": [
+        "因为比上一段更顺滑更有风格就判定通过",
+        "只比较新旧生成段",
+        "自动升为 final"
+      ]
+    },
+    {
+      "id": "raw-reference-commercial-polish-suppression",
+      "type": "adversarial-imaging",
+      "input": "原作是欠曝、失焦、堵黑的风中抓拍视频，但新段总会变成脸很清楚、皮革很亮、发丝有完整金色轮廓的商业夕阳人像视频。只差这一点时怎么重做？",
+      "mustCover": [
+        "保留已成立的事件弧、构图和光照拓扑",
+        "从原始人物素材与原始参考重新编译完整 Prompt",
+        "为天空或亮部曝光",
+        "高光只保留零碎落点",
+        "焦点落在前方物体或飞动发丝",
+        "服装作为吞光黑色大形",
+        "压制连续暖色轮廓光、正面回填和英雄式运镜"
+      ],
+      "mustAvoid": [
+        "把上一段生成视频作为输入",
+        "只在旧 Prompt 末尾堆粗粝、低清和复古",
+        "同时要求失焦与清晰双眼",
+        "继续展示完整皮革折面"
+      ]
+    },
+    {
+      "id": "polished-editorial-reference-keeps-polish",
+      "type": "near-neighbor-imaging",
+      "input": "原作本来就是稳定棚拍、清楚眼神和精致材质塑形的 editorial 视频，这套复拍也要统一加堵黑、失焦和旧数码压缩吗？",
+      "mustCover": [
+        "不统一降质",
+        "去商业抛光层只在原作有证据时启用",
+        "保留原作支持的清晰度、材质塑形和稳定曝光"
+      ],
+      "mustAvoid": [
+        "所有视频都做脏",
+        "强制失焦",
+        "把精致 editorial 改成旧数码抓拍"
+      ]
+    },
+    {
+      "id": "ambiguous-person-image-role",
+      "type": "decision",
+      "input": "这些素材里有一张人物形象图，按后面那套视频写真生成。",
+      "mustCover": [
+        "询问人物素材是保持同一人物还是只借气质"
+      ],
+      "mustAvoid": [
+        "自行假设人物素材承担身份",
+        "直接开始生成"
+      ]
+    },
+    {
+      "id": "portable-delivery-without-eagle",
+      "type": "portability",
+      "input": "我没有安装 Eagle，也没有南鸢的个人知识库。请按这组参考生成两段视频并把我以后能复用的信息都交给我。",
+      "mustCover": [
+        "继续完成两段生成与逐段检查",
+        "在对话中交付每段完整视频 Prompt",
+        "参考职责、质量状态与追溯记录",
+        "说明未归档到 Eagle"
+      ],
+      "mustAvoid": [
+        "要求先安装 Eagle",
+        "因为缺少个人知识库而中断",
+        "只交付视频和 Eagle ID"
+      ]
+    },
+    {
+      "id": "default-no-signature",
+      "type": "authorship-boundary",
+      "input": "按这套参考直接生成一段视频写真。",
+      "mustCover": [
+        "默认不添加任何署名、水印或片尾文字"
+      ],
+      "mustAvoid": [
+        "kagnet 署名",
+        "替用户决定作者名"
+      ]
+    },
+    {
+      "id": "explicit-custom-signature",
+      "type": "authorship-boundary",
+      "input": "按这套参考生成一段视频，画面里加我的署名 Kiki。",
+      "mustCover": [
+        "只加入用户指定的 Kiki 署名",
+        "署名不变成明显水印"
+      ],
+      "mustAvoid": [
+        "kagnet",
+        "忽略用户明确署名"
+      ]
+    },
+    {
+      "id": "no-platform-binding-degradation",
+      "type": "execution",
+      "input": "我没有视频生成工具，但想按这套参考出一段企划视频。",
+      "mustCover": [
+        "交付完整视频 Prompt 与拍摄方案摘要",
+        "明确说明未执行生成",
+        "不绑定任何具体平台或模型名词"
+      ],
+      "mustAvoid": [
+        "声称已经出视频",
+        "编造具体平台字段或生成结果",
+        "要求先装特定工具",
+        "不绑定任何具体平台或模型名词"
+      ]
+    },
+    {
+      "id": "analysis-only-neighbor",
+      "type": "near-neighbor",
+      "input": "只拆解这段视频的摄影质感、运镜和事件弧，不要生成。",
+      "mustCover": [
+        "共同视觉 DNA 与运动语法",
+        "只输出拆解结果"
+      ],
+      "mustAvoid": [
+        "调用视频生成工具",
+        "同步 Eagle"
+      ]
+    },
+    {
+      "id": "ordinary-variant-neighbor",
+      "type": "non-regression",
+      "input": "给我五条同系列视频变体 Prompt，不要生成。",
+      "mustCover": [
+        "同系列视频变体关键词链",
+        "五条 Prompt"
+      ],
+      "mustAvoid": [
+        "视频企划复拍完整闭环",
+        "同步 Eagle"
+      ]
+    },
+    {
+      "id": "exact-count-and-failure",
+      "type": "execution",
+      "input": "按这套写真直接生成五段视频，其中第三次接口超时。",
+      "mustCover": [
+        "总共只提交五次",
+        "第三次保存失败记录",
+        "不自动重试",
+        "继续未提交的其它编号"
+      ],
+      "mustAvoid": [
+        "为了补足五段而提交第六次",
+        "改写第三条 Prompt 后重试",
+        "为无视频失败创建伪 Eagle 项目"
+      ]
+    },
+    {
+      "id": "camera-move-light-not-rotate",
+      "type": "adversarial-lighting",
+      "input": "主参考是亭廊右侧窗洞进入的偏冷大面积柔光。新分镜改成从横梁上方垂直俯拍后缓缓下摇，人物在圆桌上展扇。怎么写光线？",
+      "mustCover": [
+        "窗洞作为世界空间中的侧向主光保持不变",
+        "重新推导眼窝、面部、双手、折扇、桌面与背景的受光和曝光关系",
+        "机位运动不能带着光源一起旋转",
+        "起幅到落幅至少四条相互一致的拓扑预测",
+        "落幅不新增起幅没有的边缘光"
+      ],
+      "mustAvoid": [
+        "把俯拍自动解释为暖色顶光",
+        "复制参考中二维高光位置",
+        "只写保持相同光影或只堆禁止词"
+      ]
+    },
+    {
+      "id": "low-angle-under-eaves-topology",
+      "type": "adversarial-lighting",
+      "input": "主参考是屋檐下柔和环境光。新段改成栏杆下方低机位仰拍并缓推，人物举扇挡光扶立柱。怎样避免变成强冷轮廓光商业人像？",
+      "mustCover": [
+        "屋檐遮挡与开口方向",
+        "扇子对脸部和手臂的局部挡光",
+        "环境回填与人物背景曝光层级",
+        "新机位与缓推动作只改变观看关系"
+      ],
+      "mustAvoid": [
+        "无证据的强冷轮廓光",
+        "无证据的深黑背景",
+        "为了画面漂亮改用舞台布光"
+      ]
+    },
+    {
+      "id": "insufficient-light-source-evidence",
+      "type": "decision",
+      "input": "参考裁得很紧，又明显做过后期，只能看出人物是低反差柔光，看不出具体光源。新机位该怎么处理？",
+      "mustCover": [
+        "标记光源证据不足",
+        "采用保守的大面积柔和环境光重建",
+        "只锁定画面真实支持的曝光和色彩关系"
+      ],
+      "mustAvoid": [
+        "编造精确灯位或器材",
+        "添加无证据的硬边光或强轮廓光"
+      ]
+    }
+  ]
+}
